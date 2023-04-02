@@ -20,6 +20,9 @@ pipeline {
               }
             }
             stage("Build Image") {
+                      options {
+              timeout(time: 1, unit: 'HOURS')   // timeout on this stage
+                    }
               steps {
                 dir('mavenapp/target') {
                   sh 'oc start-build mavenapp --from-dir . --follow'
