@@ -29,5 +29,16 @@ pipeline {
                 }
               }
             }
+            stage("Deploy Application") {
+                      options {
+              timeout(time: 1, unit: 'HOURS')   // timeout on this stage
+                    }
+              steps {
+                dir('mavenapp') {
+                  sh 'oc new-app mavenapp'
+                  sh 'oc expose service/mavenapp'
+                }
+              }
+            }
           }
         }
