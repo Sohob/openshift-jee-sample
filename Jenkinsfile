@@ -12,19 +12,12 @@ pipeline {
                         ])
               }
             }
-            stage("Build WAR") {
-              steps {
-                dir('mavenapp') {
-                  sh 'mvn clean package -Popenshift'
-                }
-              }
-            }
             stage("Build Image") {
                       options {
               timeout(time: 1, unit: 'HOURS')   // timeout on this stage
                     }
               steps {
-                dir('mavenapp/target') {
+                dir('mavenapp') {
                   sh 'oc start-build mavenapp --from-dir . --follow'
                 }
               }
